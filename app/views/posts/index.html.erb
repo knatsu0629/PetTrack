@@ -1,2 +1,18 @@
-<h1>Posts#index</h1>
-<p>Find me in app/views/posts/index.html.erb</p>
+<h1>投稿一覧</h1>
+<% @posts.each do |post| %>
+
+  <% if post.image.attached? %>
+    <%= image_tag(post.image, width: 300) %>
+  <% else %>
+    <p>画像なし</p>
+  <% end %>
+
+  <h2>
+    <%= link_to post.title, post_path(post.id)  %>
+  </h2>
+
+  <p><%= truncate(post.body, length: 100) %></p> 
+  </div>
+  <hr>
+<% end %>
+
