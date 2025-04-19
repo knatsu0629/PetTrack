@@ -1,20 +1,16 @@
-<h1>マイページ</h1>
+<h2><%= @user.name %> さんのプロフィール</h2>
+<p>メールアドレス: <%= @user.email %></p>
 
-<p><strong>名前:</strong> <%= current_user.name %></p>
-<p><strong>メールアドレス:</strong> <%= current_user.email %></p>
-
-<h2>投稿一覧</h2>
-<% current_user.posts.each do |post| %>
-  <div style="margin-bottom: 1em; padding: 0.5em; border-bottom: 1px solid #ccc;">
-    <h3><%= link_to post.title, post_path(post) %></h3>
-    <p><%= truncate(post.body, length: 100) %></p>
-  </div>
+<% if @user.introduction.present? %>
+  <h3>自己紹介</h3>
+  <p><%= simple_format(@user.introduction) %></p>
+<% else %>
+  <p>自己紹介はまだありません。</p>
 <% end %>
 
-<hr>
-
 <div style="margin-top: 2em;">
- <%= link_to 'ユーザー情報を編集', edit_user_path(current_user) %>
+ <%= link_to 'ユーザー情報を編集', edit_user_path(current_user) %> |
  <%= link_to '退会', user_path(current_user), method: :delete, data: { confirm: '本当に退会しますか？' } %>
 
 </div>
+
