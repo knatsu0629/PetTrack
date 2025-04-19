@@ -1,7 +1,8 @@
 <h1>新規投稿</h1>
+
 <% if @post.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@post.errors.count, "error") %>が発生しました:</h2>
+  <div class="alert alert-danger">
+    <%= @post.errors.count %>件のエラーが発生しました
     <ul>
       <% @post.errors.full_messages.each do |message| %>
         <li><%= message %></li>
