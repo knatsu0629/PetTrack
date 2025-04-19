@@ -1,14 +1,23 @@
-<div class="top-container">
-  <h1>PetTrackへようこそ!</h1>
-  <p>大切なペットの思い出を写真で記録しよう。</p>
-  <p>迷子になったペットの捜索にもご活用いただけます。</p>
+<main>
+  <p id="notice"></p>
 
+  <div class="container">
+    <div class="row">
+      <div class="mx-auto col-11 col-sm-10 col-lg-8 col-xl-6">
+        <h1>PetTrackへようこそ!</h1>
+        <p>愛するペットとの日々を、写真で残そう。</p>
+        <p>もしものときの迷子捜索にも、みんなの力でサポートします。</p>
 
-  <div class="btn-wrapper col-10 mx-auto">
-  <div class="row">
-    <a class="btn btn-info btn-sm btn-block mb-3 sign_in" href="<%= new_user_session_path %>">Log in</a>
+        <div class="btn-wrapper col-10 mx-auto">
+          <div class="row mb-2">
+            <a class="btn btn-info btn-sm btn-block sign_in" href="<%= new_user_session_path %>">Log in</a>
+          </div>
+          <div class="row">
+            <a class="btn btn-success btn-sm btn-block sign_up" href="<%= new_user_registration_path %>">Sign up</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
-  <div class="row">
-    <a class="btn btn-success btn-sm btn-block sign_up" href="<%= new_user_registration_path %>">Sign up</a>
-  </div>
-</div>
+</main>
