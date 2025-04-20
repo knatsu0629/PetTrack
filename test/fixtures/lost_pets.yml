@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  name: MyString
+  gender: 1
+  animal_type: MyString
+  feature: MyText
+  description: MyText
+  missing_date: 2025-04-20
+  last_seen_location: MyString
+  latitude: 1.5
+  longitude: 1.5
+  status: 1
+  user: one
+
+two:
+  title: MyString
+  name: MyString
+  gender: 1
+  animal_type: MyString
+  feature: MyText
+  description: MyText
+  missing_date: 2025-04-20
+  last_seen_location: MyString
+  latitude: 1.5
+  longitude: 1.5
+  status: 1
+  user: two

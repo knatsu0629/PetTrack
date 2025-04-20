@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   get '/about', to: 'homes#about'
 
   resources :posts
+  resources :lost_pets
+
 end

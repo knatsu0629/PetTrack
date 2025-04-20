@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_04_19_023735) do
+ActiveRecord::Schema.define(version: 2025_04_20_093643) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -40,6 +40,24 @@ ActiveRecord::Schema.define(version: 2025_04_19_023735) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "lost_pets", force: :cascade do |t|
+    t.string "title"
+    t.string "name"
+    t.integer "gender", default: 2
+    t.string "animal_type"
+    t.text "feature"
+    t.text "description"
+    t.date "missing_date"
+    t.string "last_seen_location"
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
+    t.integer "status", default: 0
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_lost_pets_on_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "title", null: false
@@ -66,5 +84,6 @@ ActiveRecord::Schema.define(version: 2025_04_19_023735) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "lost_pets", "users"
   add_foreign_key "posts", "users"
 end
