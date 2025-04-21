@@ -1,6 +1,14 @@
 class PostsController < ApplicationController
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
   
+  before_action :check_guest_user, only: [:new, :create, :edit, :update, :destroy]
+
+  def check_guest_user
+    if current_user.email == 'guest@example.com'
+      redirect_to posts_path, alert: 'ゲストユーザーはこの操作を行えません。'
+    end
+  end
+
   def index
     @posts = Post.all
   end

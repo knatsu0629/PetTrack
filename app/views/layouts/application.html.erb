@@ -63,6 +63,12 @@
       </nav>
     </header>
 
+      <% if notice %>
+        <div class="alert alert-info">
+          <%= notice %>
+        </div>
+      <% end %>
+
     <main class="mb-auto">
       <%= yield %>
     </main>

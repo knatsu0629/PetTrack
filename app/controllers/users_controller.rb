@@ -1,6 +1,14 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!  
-  
+
+  before_action :ensure_guest_user, only: [:edit, :update, :destroy]
+
+  def ensure_guest_user
+    if current_user.email == 'guest@example.com'
+      redirect_to root_path, alert: 'ゲストユーザーは編集できません。'
+    end
+  end
+
   def show
     @user = current_user
   end
