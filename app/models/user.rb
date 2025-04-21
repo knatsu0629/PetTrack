@@ -16,4 +16,5 @@ class User < ApplicationRecord
   end
 
   has_many :posts, dependent: :destroy
+  has_many :lost_pets, dependent: :destroy
 end

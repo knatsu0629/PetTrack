@@ -1,2 +1,84 @@
-<h1>LostPets#new</h1>
-<p>Find me in app/views/lost_pets/new.html.erb</p>
+<main>
+  <h1>迷子ペットの投稿</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+
+        <%= form_with(model: @lost_pet, local: true) do |form| %>
+          <% if @lost_pet.errors.any? %>
+            <div class="alert alert-danger">
+              <ul>
+                <% @lost_pet.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="form-group">
+            <%= form.label :title, 'タイトル' %>
+            <%= form.text_field :title, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :image, 'ペットの写真' %>
+            <%= form.file_field :image, class: 'form-control-file' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :name, 'ペットの名前' %>
+            <%= form.text_field :name, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :animal_type, 'ペットの種類' %>
+            <%= form.text_field :animal_type, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :gender, '性別' %>
+            <%= form.select :gender, [['オス', 0], ['メス', 1], ['不明', 2]], { include_blank: '選択してください' }, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :feature, '特徴' %>
+            <%= form.text_area :feature, class: 'form-control', rows: 3 %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :description, '詳細説明' %>
+            <%= form.text_area :description, class: 'form-control', rows: 4 %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :missing_date, '行方不明日' %>
+            <%= form.date_field :missing_date, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :last_seen_location, '最終目撃場所' %>
+            <%= form.text_field :last_seen_location, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :latitude, '緯度' %>
+            <%= form.text_field :latitude, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :longitude, '経度' %>
+            <%= form.text_field :longitude, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :status, 'ステータス' %>
+            <%= form.select :status, [['未発見', 0], ['発見', 1]], class: 'form-control' %>
+          </div>
+
+          <%= form.submit '投稿する', class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</main>
+

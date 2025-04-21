@@ -1,2 +1,37 @@
-<h1>LostPets#index</h1>
-<p>Find me in app/views/lost_pets/index.html.erb</p>
+<main>
+  <h1>迷子ペット一覧</h1>
+  <div class="container">
+    <div class="row">
+      <% if @lost_pets.present? %>
+        <% @lost_pets.each do |lost_pet| %>
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <% if lost_pet.image.attached? %>
+                <%= image_tag lost_pet.image, class: 'card-img-top' %>
+              <% else %>
+                <%= image_tag 'default_image.jpg', class: 'card-img-top' %>
+              <% end %>
+
+              <div class="card-body">
+                <h5 class="card-title"><%= lost_pet.title %></h5>
+                <p class="card-text">
+                  <strong>名前:</strong> <%= lost_pet.name %><br>
+                  <strong>種類:</strong> <%= lost_pet.animal_type %><br>
+                  <strong>性別:</strong> <%= lost_pet.gender %><br>
+                  <strong>性別:</strong> <%= lost_pet.gender.capitalize %><br>
+                  <strong>特徴:</strong> <%= lost_pet.feature.truncate(100) %><br>
+                  <strong>最終目撃場所:</strong> <%= lost_pet.last_seen_location %><br>
+                  <strong>行方不明日:</strong> <%= lost_pet.missing_date.strftime('%Y年%m月%d日') %><br>
+                  <strong>ステータス:</strong> <%= lost_pet.status == 0 ? '未発見' : '発見' %>
+                </p>
+                <%= link_to '詳細', lost_pet_path(lost_pet), class: 'btn btn-primary' %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p>迷子ペットはまだ登録されていません。</p>
+      <% end %>
+    </div>
+  </div>
+</main>

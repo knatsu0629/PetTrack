@@ -1,2 +1,22 @@
-<h1>LostPets#show</h1>
-<p>Find me in app/views/lost_pets/show.html.erb</p>
+<h1>迷子ペット情報</h1>
+
+<% if @lost_pet.image.attached? %>
+  <%= image_tag @lost_pet.image, style: "max-width: 300px;" %>
+<% else %>
+  <p>画像は登録されていません。</p>
+<% end %>
+
+<p><strong>タイトル:</strong> <%= @lost_pet.title %></p>
+<p><strong>名前:</strong> <%= @lost_pet.name %></p>
+<p><strong>性別:</strong> <%= LostPet.genders[@lost_pet.gender] == "male" ? "オス" : LostPet.genders[@lost_pet.gender] == "female" ? "メス" : "不明" %></p>
+<p><strong>種類:</strong> <%= @lost_pet.animal_type %></p>
+<p><strong>特徴:</strong> <%= @lost_pet.feature %></p>
+<p><strong>説明:</strong> <%= @lost_pet.description %></p>
+<p><strong>行方不明日:</strong> <%= @lost_pet.missing_date.strftime("%Y年%m月%d日") %></p>
+<p><strong>最終目撃場所:</strong> <%= @lost_pet.last_seen_location %></p>
+<p><strong>緯度:</strong> <%= @lost_pet.latitude %></p>
+<p><strong>経度:</strong> <%= @lost_pet.longitude %></p>
+<p><strong>ステータス:</strong> <%= @lost_pet.status == 0 ? "未発見" : "発見済み" %></p>
+
+<%= link_to "編集する", edit_lost_pet_path(@lost_pet), class: "btn btn-primary" %> 
+<%= link_to "一覧へ戻る", lost_pets_path, class: "btn btn-secondary" %>
