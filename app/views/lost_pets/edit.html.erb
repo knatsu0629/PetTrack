@@ -66,6 +66,5 @@
   </div>
 
   <%= form.submit "更新する", class: "btn btn-primary" %>
-  <%= link_to '削除', @lost_pet, method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'btn btn-danger' %>
   <%= link_to 'キャンセル', lost_pet_path(@lost_pet), class: "btn btn-secondary" %>
 <% end %>

@@ -18,5 +18,8 @@
 <p><strong>経度:</strong> <%= @lost_pet.longitude %></p>
 <p><strong>ステータス:</strong> <%= @lost_pet.status == 0 ? "未発見" : "発見済み" %></p>
 
-<%= link_to "編集する", edit_lost_pet_path(@lost_pet), class: "btn btn-primary" %> 
-<%= link_to "一覧へ戻る", lost_pets_path, class: "btn btn-secondary" %>
+<div style="display: flex; gap: 10px;">
+  <%= link_to "編集する", edit_lost_pet_path(@lost_pet), class: "btn btn-primary" %>
+  <%= link_to "削除する", lost_pet_path(@lost_pet), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+  <%= link_to "一覧へ戻る", lost_pets_path, class: "btn btn-secondary" %>
+</div>

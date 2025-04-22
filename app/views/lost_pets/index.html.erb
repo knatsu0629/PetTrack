@@ -1,5 +1,8 @@
 <main>
   <h1>迷子ペット一覧</h1>
+  <p><%= link_to '＋ 迷子ペットを投稿する', new_lost_pet_path, class: 'btn btn-success' %></p>
+
+
   <div class="container">
     <div class="row">
       <% if @lost_pets.present? %>
@@ -16,12 +19,14 @@
                 <h5 class="card-title"><%= lost_pet.title %></h5>
                 <p class="card-text">
                   <strong>名前:</strong> <%= lost_pet.name %><br>
-                  <strong>種類:</strong> <%= lost_pet.animal_type %><br>
                   <strong>性別:</strong> <%= lost_pet.gender %><br>
-                  <strong>性別:</strong> <%= lost_pet.gender.capitalize %><br>
-                  <strong>特徴:</strong> <%= lost_pet.feature.truncate(100) %><br>
+                  <strong>種類:</strong> <%= lost_pet.animal_type %><br>               
+                  <strong>特徴:</strong> <%= lost_pet.feature %><br>
+                  <strong>説明:</strong> <%= lost_pet.description.truncate(100) %><br>
                   <strong>最終目撃場所:</strong> <%= lost_pet.last_seen_location %><br>
                   <strong>行方不明日:</strong> <%= lost_pet.missing_date.strftime('%Y年%m月%d日') %><br>
+                  <strong>経度:</strong> <%= lost_pet.longitude %><br>
+                  <strong>緯度:</strong> <%= lost_pet.latitude %><br>
                   <strong>ステータス:</strong> <%= lost_pet.status == 0 ? '未発見' : '発見' %>
                 </p>
                 <%= link_to '詳細', lost_pet_path(lost_pet), class: 'btn btn-primary' %>

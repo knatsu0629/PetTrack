@@ -4,8 +4,14 @@
 <h2>本文</h2>
 <p><%= @post.body %></p>
 
-
 <% if @post.user == current_user %>
- <p><%= link_to '編集', edit_post_path(@post.id) %></p>
- <%= link_to "削除", post_path(@post), method: :delete, "data-confirm" => "本当に削除しますか？" %>
+  <div class="d-flex flex-row">
+    <%= link_to '編集する', edit_post_path(@post), class: 'btn btn-primary', style: 'margin-right: 0.5rem !important;' %>
+    <%= link_to '削除する', post_path(@post), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger', style: 'margin-right: 0.5rem !important;' %>
+    <%= link_to '一覧へ戻る', posts_path, class: 'btn btn-secondary' %>
+  </div>
+<% else %>
+  <div class="text-center mt-3">
+    <%= link_to '一覧へ戻る', posts_path, class: 'btn btn-secondary' %>
+  </div>
 <% end %>
