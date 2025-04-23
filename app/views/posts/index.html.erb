@@ -1,5 +1,9 @@
 <h1>投稿一覧</h1>
-<p><%= link_to '＋ 投稿する', new_post_path, class: 'btn btn-success' %></p>
+<% if user_signed_in? && !current_user.guest_user? %>
+  <p>
+    <%= link_to '＋ 投稿する', new_post_path, class: 'btn btn-success' %>
+  </p>
+<% end %>
 
 
 <% @posts.each do |post| %>

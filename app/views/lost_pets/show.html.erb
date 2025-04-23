@@ -19,7 +19,9 @@
 <p><strong>ステータス:</strong> <%= @lost_pet.status == 0 ? "未発見" : "発見済み" %></p>
 
 <div style="display: flex; gap: 10px;">
-  <%= link_to "編集する", edit_lost_pet_path(@lost_pet), class: "btn btn-primary" %>
-  <%= link_to "削除する", lost_pet_path(@lost_pet), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
-  <%= link_to "一覧へ戻る", lost_pets_path, class: "btn btn-secondary" %>
+  <% if @lost_pet.user == current_user && !current_user.guest_user? %>
+    <%= link_to "編集する", edit_lost_pet_path(@lost_pet), class: "btn btn-primary" %>
+    <%= link_to "削除する", lost_pet_path(@lost_pet), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+  <% end %>
+    <%= link_to "一覧へ戻る", lost_pets_path, class: "btn btn-secondary" %>
 </div>

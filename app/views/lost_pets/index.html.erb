@@ -1,7 +1,10 @@
 <main>
   <h1>迷子ペット一覧</h1>
-  <p><%= link_to '＋ 迷子ペットを投稿する', new_lost_pet_path, class: 'btn btn-success' %></p>
-
+  <% if user_signed_in? && !current_user.guest_user? %>
+    <p>
+      <%= link_to '＋ 迷子ペットを投稿する', new_lost_pet_path, class: 'btn btn-success' %>
+    </p>
+  <% end %>
 
   <div class="container">
     <div class="row">

@@ -19,7 +19,5 @@ Rails.application.routes.draw do
 
   resources :posts
   resources :lost_pets
-
-
 end
 

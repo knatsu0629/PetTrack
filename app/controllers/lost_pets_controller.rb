@@ -1,5 +1,7 @@
 class LostPetsController < ApplicationController
   before_action :set_lost_pet, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
+  before_action :reject_guest_user, only: [:new, :create]
 
   def index
     @lost_pets = LostPet.all
@@ -29,7 +31,7 @@ class LostPetsController < ApplicationController
   def update
     @lost_pet = LostPet.find(params[:id])
     if @lost_pet.update(lost_pet_params)
-      redirect_to lost_pet_path(@lost_pet.id)
+      redirect_to lost_pet_path(@lost_pet.id), notice: '迷子ペット情報を更新しました。'
     else
       render :edit
     end
@@ -53,6 +55,19 @@ private
       :title, :name, :animal_type, :gender, :feature, :description,
       :missing_date, :last_seen_location, :latitude, :longitude, :status, :image
       ).merge(gender: params[:lost_pet][:gender].to_i)
+  end
+
+  def ensure_correct_user
+    @lost_pet = LostPet.find(params[:id])
+    unless @lost_pet.user == current_user
+      redirect_to lost_pets_path
+    end
+  end
+
+  def reject_guest_user
+    if current_user&.guest_user?
+      redirect_to lost_pets_path
+    end
   end
 end
 
