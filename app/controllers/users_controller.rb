@@ -1,11 +1,18 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!  
-
   before_action :ensure_guest_user, only: [:edit, :update, :destroy]
+  before_action :ensure_correct_user, only: [:edit, :update]
 
   def ensure_guest_user
     if current_user.email == 'guest@example.com'
       redirect_to root_path, alert: 'ゲストユーザーは編集できません。'
+    end
+  end
+
+  def ensure_correct_user
+    @user = User.find(params[:id])
+    unless @user == current_user
+      redirect_to user_path(current_user), alert: '他のユーザーのプロフィールは編集できません。'
     end
   end
 

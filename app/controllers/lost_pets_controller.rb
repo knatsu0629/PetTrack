@@ -1,7 +1,9 @@
 class LostPetsController < ApplicationController
+  before_action :authenticate_user!, only: [:index, :show, :edit, :update, :new, :create, :destroy]
   before_action :set_lost_pet, only: [:show, :edit, :update, :destroy]
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
-  before_action :reject_guest_user, only: [:new, :create]
+  before_action :reject_guest_user, only: [:new, :create, :edit, :update, :destroy]
+
 
   def index
     @lost_pets = LostPet.all
