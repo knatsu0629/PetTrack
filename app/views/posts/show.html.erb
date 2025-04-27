@@ -2,7 +2,16 @@
 <p><%= @post.title %></p>
 
 <h2>本文</h2>
+
 <p><%= @post.body %></p>
+
+<% if @post.image.attached? %>
+  <div style="text-align: center; margin-bottom: 30px;">
+    <%= image_tag @post.image, style: "max-width: 300px; width: 100%; height: auto; border-radius: 10px;" %>
+  </div>
+<% end %>
+
+<p>投稿者: <%= link_to @post.user.name, user_path(@post.user) %></p>
 
 <div style="display: flex; gap: 10px; justify-content: flex-start; flex-wrap: wrap;">
   <% if @post.user == current_user && !current_user.guest_user? %>

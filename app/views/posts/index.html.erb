@@ -20,5 +20,7 @@
 
   <p><%= truncate(post.body, length: 100) %></p> 
 
+  <p>投稿者: <%= link_to post.user.name, user_path(post.user) %></p>
+
   <hr>
 <% end %>
