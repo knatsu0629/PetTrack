@@ -26,5 +26,6 @@
   <h4>画像をアップロード</h4>
   <%= f.file_field :image %>
  
-  <%= f.submit '保存' %>
+  <%= f.submit '保存', class: "btn btn-primary" %>
+  <%= link_to 'キャンセル', post_path(@post), class: "btn btn-secondary" %>
 <% end %>
