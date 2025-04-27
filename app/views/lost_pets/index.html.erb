@@ -30,7 +30,8 @@
                   <strong>行方不明日:</strong> <%= lost_pet.missing_date.strftime('%Y年%m月%d日') %><br>
                   <strong>経度:</strong> <%= lost_pet.longitude %><br>
                   <strong>緯度:</strong> <%= lost_pet.latitude %><br>
-                  <strong>ステータス:</strong> <%= lost_pet.status == 0 ? '未発見' : '発見' %>
+                  <strong>ステータス:</strong> <%= lost_pet.status == 0 ? '未発見' : '発見' %><br>
+                  <strong>投稿者:</strong> <%= link_to lost_pet.user.name, user_path(lost_pet.user) %><br>
                 </p>
                 <%= link_to '詳細', lost_pet_path(lost_pet), class: 'btn btn-primary' %>
               </div>
