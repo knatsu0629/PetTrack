@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!  
+  before_action :authenticate_user!
   before_action :ensure_guest_user, only: [:edit, :update, :destroy]
   before_action :ensure_correct_user, only: [:edit, :update]
 
@@ -43,10 +43,7 @@ class UsersController < ApplicationController
     @users = User.where("name LIKE ?", "%#{params[:keyword]}%")
   end
 
-  def guest_sign_in
-  end
-    
-
+  
   private
 
   def user_params

@@ -1,18 +1,19 @@
 class PostsController < ApplicationController
-  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
-  before_action :authenticate_user!, only: [:index, :show, :edit, :update, :new, :create, :destroy]
   before_action :check_guest_user, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
+ 
+
+  def check_guest_user
+    if current_user.email == 'guest@example.com'
+      redirect_to posts_path, alert: 'ゲストユーザーはこの操作を行えません。'
+    end
+  end
 
   def ensure_correct_user
     @post = Post.find(params[:id])
     unless @post.user == current_user
       redirect_to posts_path, alert: '他のユーザーの投稿は編集できません。'
-    end
-  end
-
-  def check_guest_user
-    if current_user.email == 'guest@example.com'
-      redirect_to posts_path, alert: 'ゲストユーザーはこの操作を行えません。'
     end
   end
 
@@ -67,12 +68,5 @@ class PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:title, :body, :image)
-  end
-
-  def ensure_correct_user
-    @post = Post.find(params[:id])
-    unless @post.user == current_user
-      redirect_to posts_path
-    end
   end
 end

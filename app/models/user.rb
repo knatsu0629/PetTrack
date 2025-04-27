@@ -19,14 +19,6 @@ class User < ApplicationRecord
     end
   end
 
-  class Users::SessionsController < Devise::SessionsController
-    def guest_sign_in
-      user = User.guest
-      sign_in user
-      redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
-    end
-  end  
-
   has_many :posts, dependent: :destroy
   has_many :lost_pets, dependent: :destroy
 end
