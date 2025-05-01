@@ -1,0 +1,9 @@
+<%= form_with url: search_path, method: :get, local: true do |f| %>
+  <%= f.label :model, "Search for" %>
+  <%= f.select :model, options_for_select([["User", "user"], ["Post", "post"]]) %>
+
+  <%= f.label :keyword, "Keyword" %>
+  <%= f.text_field :keyword, placeholder: "Enter keyword" %>
+
+  <%= f.submit "Search" %>
+<% end %>

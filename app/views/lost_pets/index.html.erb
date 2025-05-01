@@ -1,4 +1,10 @@
 <main>
+<% if user_signed_in? %>
+  <div class="text-center my-3">
+    <%= render 'shared/search_form' %>
+  </div>
+<% end %>
+
   <h1>迷子ペット一覧</h1>
   <% if user_signed_in? && !current_user.guest_user? %>
     <p>

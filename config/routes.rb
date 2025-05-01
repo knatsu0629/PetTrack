@@ -17,5 +17,7 @@ Rails.application.routes.draw do
 
   resources :posts
   resources :lost_pets
+  resources :users, only: [:show, :edit, :update, :destroy]
+
 end
 
