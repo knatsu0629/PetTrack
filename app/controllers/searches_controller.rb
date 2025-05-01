@@ -6,11 +6,12 @@ class SearchesController < ApplicationController
     @keyword = params[:keyword]
   
     if @model == "user"
-      @users = User.where("name LIKE ?", "%#{@keyword}%")
+      @results = User.where("name LIKE ?", "%#{@keyword}%")
     elsif @model == "post"
-       @posts = Post.where("caption LIKE ?", "%#{@keyword}%")
+      @results = Post.where("caption LIKE ?", "%#{@keyword}%")
     else
       flash[:alert] = "検索対象を選んでください"
+      @results = []  
     end
   end
 end
