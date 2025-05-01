@@ -1,0 +1,44 @@
+<h2>検索結果</h2>
+
+<% if @model == "user" %>
+  <% if @users.present? %>
+    <ul>
+      <% @users.each do |user| %>
+        <li>
+          <%= link_to user.name, user_path(user) %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>該当するユーザーが見つかりませんでした。</p>
+  <% end %>
+
+<% elsif @model == "post" %>
+  <% if @posts.present? %>
+    <ul>
+      <% @posts.each do |post| %>
+        <li>
+          <%= link_to truncate(post.title, length: 30), post_path(post) %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>該当する投稿が見つかりませんでした。</p>
+  <% end %>
+  
+<% elsif @model == "lost_pet" %>
+  <% if @lost_pets.present? %>
+    <ul>
+      <% @lost_pets.each do |lost_pet| %>
+        <li>
+          <%= link_to lost_pet.name, lost_pet_path(lost_pet) %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>該当する投稿が見つかりませんでした。</p>
+  <% end %>
+
+<% else %>
+  <p>検索対象を選択してください。</p>
+<% end %>
