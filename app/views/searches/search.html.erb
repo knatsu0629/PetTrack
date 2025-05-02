@@ -54,3 +54,7 @@
 <% else %>
   <p>検索対象を選択してください。</p>
 <% end %>
+
+<div style="margin-top: 2em;">
+  <%= link_to "検索に戻る", request.referer || root_path, class: "btn btn-secondary" %>
+</div>
