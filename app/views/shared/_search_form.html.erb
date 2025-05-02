@@ -1,3 +1,9 @@
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
 <%= form_with url: search_path, method: :get, local: true do |f| %>
 
    <%= f.label :keyword, "Keyword" %>
