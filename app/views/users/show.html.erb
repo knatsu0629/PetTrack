@@ -1,4 +1,11 @@
 <h2><%= @user.name %> さんのプロフィール</h2>
+
+<% if @user.avatar.attached? %>
+  <%= image_tag @user.avatar.variant(resize: "100x100"), class: "rounded-circle", alt: @user.name %>
+<% else %>
+  <p>プロフィール画像は未登録です</p>
+<% end %>
+
 <p>メールアドレス: <%= @user.email %></p>
 
 <% if @user.introduction.present? %>
@@ -11,6 +18,6 @@
 <div style="margin-top: 2em;">
  <%= link_to 'ユーザー情報を編集', edit_user_path(current_user) %> |
  <%= link_to '退会', user_path(current_user), method: :delete, data: { confirm: '本当に退会しますか？' } %>
-
 </div>
 
+<%= link_to '戻る', request.referer || root_path, class: 'btn btn-secondary', style: 'margin-top: 20px;' %>

@@ -18,8 +18,12 @@
 <p><strong>緯度:</strong> <%= @lost_pet.latitude %></p>
 <p><strong>経度:</strong> <%= @lost_pet.longitude %></p>
 <p><strong>ステータス:</strong> <%= @lost_pet.status == 0 ? "未発見" : "発見済み" %></p>
-<p><strong>投稿者:</strong> <%= link_to @lost_pet.user.name, user_path(@lost_pet.user) %><br></p>
-
+<p><strong>投稿者:</strong> 
+  <% if @lost_pet.user.avatar.attached? %>
+    <%= image_tag @lost_pet.user.avatar.variant(resize: "40x40"), class: "rounded-circle", alt: @lost_pet.user.name %>
+  <% end %>
+  <%= link_to @lost_pet.user.name, user_path(@lost_pet.user), class: "ms-2" %><br>
+</p>
 
 <div style="display: flex; gap: 10px;">
   <% if @lost_pet.user == current_user && !current_user.guest_user? %>

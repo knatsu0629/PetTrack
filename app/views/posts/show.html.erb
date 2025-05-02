@@ -2,7 +2,6 @@
 <p><%= @post.title %></p>
 
 <h2>本文</h2>
-
 <p><%= @post.body %></p>
 
 <% if @post.image.attached? %>
@@ -11,7 +10,12 @@
   </div>
 <% end %>
 
-<p>投稿者: <%= link_to @post.user.name, user_path(@post.user) %></p>
+<p>
+  <% if @post.user.avatar.attached? %>
+    <%= image_tag @post.user.avatar.variant(resize: "40x40"), class: "rounded-circle", alt: @post.user.name %>
+  <% end %>
+  <%= link_to @post.user.name, user_path(@post.user), class: "ms-2" %>
+</p>
 
 <div style="display: flex; gap: 10px; justify-content: flex-start; flex-wrap: wrap;">
   <% if @post.user == current_user && !current_user.guest_user? %>

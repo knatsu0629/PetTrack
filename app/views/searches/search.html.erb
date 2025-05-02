@@ -4,8 +4,12 @@
   <% if @users.present? %>
     <ul>
       <% @users.each do |user| %>
-        <li>
-          <%= link_to user.name, user_path(user) %>
+        <li style="margin-bottom: 1em;">
+          <% if user.avatar.attached? %>
+            <%= image_tag user.avatar.variant(resize: "50x50"), alt: user.name, class: "rounded-circle" %>
+          <% end %>
+          <%= link_to user.name, user_path(user), style: "font-weight: bold;" %><br>
+          <small><%= truncate(user.introduction, length: 50) %></small>
         </li>
       <% end %>
     </ul>
@@ -17,21 +21,30 @@
   <% if @posts.present? %>
     <ul>
       <% @posts.each do |post| %>
-        <li>
-          <%= link_to truncate(post.title, length: 30), post_path(post) %>
+        <li style="margin-bottom: 1.5em;">
+          <%= link_to truncate(post.title, length: 30), post_path(post), style: "font-size: 1.1em; font-weight: bold;" %><br>
+          <small><%= truncate(post.body, length: 100) %></small><br>
+          <small>投稿者: <%= post.user.name %> | 投稿日: <%= l(post.created_at, format: :short) %></small>
         </li>
       <% end %>
     </ul>
   <% else %>
     <p>該当する投稿が見つかりませんでした。</p>
   <% end %>
-  
+
 <% elsif @model == "lost_pet" %>
   <% if @lost_pets.present? %>
     <ul>
       <% @lost_pets.each do |lost_pet| %>
-        <li>
-          <%= link_to lost_pet.name, lost_pet_path(lost_pet) %>
+        <li style="margin-bottom: 1.5em;">
+          <% if lost_pet.image.attached? %>
+            <%= image_tag lost_pet.image.variant(resize: "80x80"), alt: lost_pet.name, class: "rounded" %>
+          <% end %>
+          <%= link_to lost_pet.name, lost_pet_path(lost_pet), style: "font-size: 1.1em; font-weight: bold;" %><br>
+          <small>
+            種類: <%= lost_pet.animal_type %> / 性別: <%= lost_pet.gender %> / 特徴: <%= lost_pet.feature %><br>
+            行方不明日: <%= l(lost_pet.missing_date, format: :short) %>
+          </small>
         </li>
       <% end %>
     </ul>
