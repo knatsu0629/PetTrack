@@ -26,6 +26,8 @@
 
   <p><%= truncate(post.body, length: 100) %></p> 
 
+  <p>💬 コメント数: <%= post.comments.count %></p>
+
   <p>投稿者:
     <% if post.user.avatar.attached? %>
       <%= image_tag post.user.avatar.variant(resize: "40x40"), class: "rounded-circle", alt: post.user.name %>
