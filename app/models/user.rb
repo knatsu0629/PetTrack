@@ -19,9 +19,9 @@ class User < ApplicationRecord
     end
   end
 
-  # app/models/user.rb
   has_one_attached :avatar
   has_many :posts, dependent: :destroy
-  has_many :lost_pets, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :lost_pets, dependent: :destroy
+  has_many :lost_pet_comments, dependent: :destroy
 end

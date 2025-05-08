@@ -11,6 +11,7 @@ class LostPetsController < ApplicationController
 
   def show
     @lost_pet = LostPet.find(params[:id])
+    @lost_pet_comments = @lost_pet.lost_pet_comments.includes(:user)
   end
 
   def new

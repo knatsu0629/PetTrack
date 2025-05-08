@@ -11,6 +11,11 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
   end
 
+  resources :lost_pets do
+    resources :lost_pet_comments, only: [:create, :destroy]
+  end
+  
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: 'homes#top'
   get '/about', to: 'homes#about'

@@ -37,6 +37,7 @@
                   <strong>経度:</strong> <%= lost_pet.longitude %><br>
                   <strong>緯度:</strong> <%= lost_pet.latitude %><br>
                   <strong>ステータス:</strong> <%= lost_pet.status == 0 ? '未発見' : '発見' %><br>
+                  <strong>💬 コメント数:</strong> <%= lost_pet.lost_pet_comments.count %> 件<br>
                   <strong>投稿者:</strong> 
                     <% if lost_pet.user.avatar.attached? %>
                       <%= image_tag lost_pet.user.avatar.variant(resize: "40x40"), class: "rounded-circle", alt: lost_pet.user.name %>
