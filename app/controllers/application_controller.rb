@@ -1,17 +1,21 @@
 class ApplicationController < ActionController::Base
-  before_action :authenticate_user!
-
-  def after_sign_in_path_for(resource)
-    if resource.email == 'guest@example.com'
-      posts_path
+  before_action :configure_authentication
+ 
+  private
+ 
+  def configure_authentication
+    if admin_controller?
+      authenticate_admin!
     else
-      posts_path
+      authenticate_user! unless action_is_public?
     end
   end
-
-  protected
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+ 
+  def admin_controller?
+    self.class.module_parent_name == 'Admin'
+  end
+ 
+  def action_is_public?
+    controller_name == 'homes' && action_name == 'top'
   end
 end
