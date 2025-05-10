@@ -1,0 +1,37 @@
+<h3 style="margin-top: 40px; margin-bottom: 20px;">
+  コメント (<%= comments.count %>)
+</h3>
+
+<div style="margin-bottom: 30px;">
+  <% comments.each do |comment| %>
+    <% if comment.user.present? %>
+      <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 15px; border-radius: 8px; background-color: #f9f9f9;">
+        <p style="margin: 0 0 8px;"><strong><%= comment.user.name %></strong></p>
+        <p style="margin: 0 0 10px;"><%= comment.send(comment_body_method) %></p>
+
+        <% if comment.user == current_user %>
+          <%= link_to "削除", delete_path.call(comment),
+                      method: :delete,
+                      data: { confirm: "コメントを削除しますか？" },
+                      style: "color: #c00; font-size: 0.9em; text-decoration: underline;" %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<% if user_signed_in? && !current_user.guest_user? %>
+  <div style="border: 1px solid #ccc; padding: 20px; border-radius: 10px; background-color: #f0f0f0; margin-bottom: 40px;">
+    <h4 style="margin-bottom: 15px;">コメントを追加</h4>
+    <%= form_with(model: [parent, comment_model.new], local: true) do |f| %>
+      <div style="margin-bottom: 15px;">
+        <%= f.text_area comment_body_attribute, rows: 3, placeholder: "コメントを入力してください", style: "width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;" %>
+      </div>
+      <div>
+        <%= f.submit "送信", style: "padding: 8px 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;" %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p style="color: #888;">※ログイン後にコメントできます。</p>
+<% end %>
