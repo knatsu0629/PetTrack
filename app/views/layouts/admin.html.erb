@@ -6,7 +6,7 @@
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
-<body>
+<body class="d-flex flex-column vh-100" style="padding-left: 20px; padding-right: 20px;">
   <% if admin_signed_in? %>
     <div class="text-right">
       <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete %>
