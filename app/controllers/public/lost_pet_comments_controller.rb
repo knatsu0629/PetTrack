@@ -1,4 +1,6 @@
 class Public::LostPetCommentsController < ApplicationController
+    before_action :check_guest_user, only: [:create, :destroy]
+
   def create
     @lost_pet = LostPet.find(params[:lost_pet_id])
     @lost_pet_comment = @lost_pet.lost_pet_comments.new(comment_params)
@@ -24,6 +26,12 @@ class Public::LostPetCommentsController < ApplicationController
   
 
   private
+
+  def check_guest_user
+    if current_user && current_user.email == 'guest@example.com'
+      redirect_to lost_pets_path, alert: 'ゲストユーザーはこの操作を行えません。'
+    end
+  end
 
   def comment_params
     params.require(:lost_pet_comment).permit(:comment)

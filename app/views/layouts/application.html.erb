@@ -31,14 +31,17 @@
                 <li class="nav-item">
                   <%= link_to '投稿一覧', posts_path, class: 'nav-link' %>
                 </li>
+              <% unless current_user.guest_user? %>
                 <li class="nav-item">
                   <%= link_to '新規投稿', new_post_path, class: 'nav-link' %>
                 </li>
+                <li class="nav-item">
+                  <%= link_to '迷子ペット投稿', new_lost_pet_path, class: 'nav-link' %> 
+               </li>
+              <% end %>
+
                  <li class="nav-item">
                  <%= link_to '迷子ペット', lost_pets_path, class: 'nav-link' %>
-                </li>
-                <li class="nav-item">
-                 <%= link_to '迷子ペット投稿', new_lost_pet_path, class: 'nav-link' %> 
                 </li>
                 <li class="nav-item">
                   <%= link_to 'マイページ', user_path(current_user), class: 'nav-link' %>
@@ -66,11 +69,11 @@
       </nav>
     </header>
 
-      <% if notice %>
-        <div class="alert alert-info">
-          <%= notice %>
-        </div>
-      <% end %>
+    <% flash.each do |key, message| %>
+      <div class="alert alert-<%= key == 'notice' ? 'info' : 'danger' %> mt-3" role="alert">
+        <%= message %>
+      </div>
+    <% end %>
 
     <main class="mb-auto">
       <%= yield %>
