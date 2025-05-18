@@ -1,0 +1,18 @@
+<h1>いいねした投稿一覧</h1>
+
+<% if @liked_posts.any? %>
+  <% @liked_posts.each do |post| %>
+    <div class="mb-3">
+      <% if post.image.attached? %>
+        <%= image_tag post.image, width: 300 %>
+      <% end %>
+
+      <h2><%= link_to post.title, post_path(post) %></h2>
+      <p><%= truncate(post.body, length: 100) %></p>
+      <p>投稿者: <%= post.user.name %></p>
+    </div>
+    <hr>
+  <% end %>
+<% else %>
+  <p>まだいいねした投稿はありません。</p>
+<% end %>

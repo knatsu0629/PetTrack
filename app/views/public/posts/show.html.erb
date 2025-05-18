@@ -10,6 +10,33 @@
   </div>
 <% end %>
 
+<% if user_signed_in? %>
+  <div class="mb-3 d-flex align-items-center" style="gap: 5px; font-size: 1.2rem;">
+    <% liked = current_user.liked_posts.include?(@post) %>
+    <% like_count = @post.likes.count %>
+
+    <% if liked %>
+      <%= button_to post_like_path(@post), method: :delete, class: "btn btn-link p-0", form: { class: "d-inline" } do %>
+        <i class="fas fa-heart text-danger"></i>
+      <% end %>
+    <% else %>
+      <%= button_to post_like_path(@post), method: :post, class: "btn btn-link p-0", form: { class: "d-inline" } do %>
+        <% if like_count.zero? %>
+          <i class="fas fa-heart text-primary"></i> <!-- 青い塗りつぶし -->
+        <% else %>
+          <i class="fas fa-heart text-danger"></i> <!-- 赤い塗りつぶし -->
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if like_count.zero? %>
+      <span class="text-primary"><%= like_count %></span>
+    <% else %>
+      <span class="text-danger"><%= like_count %></span>
+    <% end %>
+  </div>
+<% end %>
+
 <p>
   <% if @post.user.avatar.attached? %>
     <%= image_tag @post.user.avatar.variant(resize: "40x40"), class: "rounded-circle", alt: @post.user.name %>
@@ -32,4 +59,3 @@
             comment_body_attribute: :content,
             comment_body_method: :content,
             delete_path: ->(comment) { post_comment_path(@post, comment) } %>
-

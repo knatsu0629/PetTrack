@@ -15,11 +15,12 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: 'homes#top'
     get '/about', to: 'homes#about'
-
     get "search", to: "searches#search"
+    get 'likes', to: 'likes#index', as: 'liked_posts'
 
-    resources :posts do
+    resources :posts, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
       resources :comments, only: [:create, :destroy]
+      resource :like, only: [:create, :destroy] 
     end
 
     resources :lost_pets do
@@ -27,6 +28,7 @@ Rails.application.routes.draw do
     end
 
     resources :users, only: [:show, :edit, :update, :destroy]
+    
   end
 
   namespace :admin do
