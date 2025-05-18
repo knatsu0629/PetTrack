@@ -28,23 +28,32 @@
 
   <p>💬 コメント数: <%= post.comments.count %></p>
 
-  <% if user_signed_in? %>
+  <% like_count = post.likes.count %>
   <div class="mb-2 d-flex align-items-center" style="gap: 6px; font-size: 1.1rem;">
-    <% liked = current_user.liked_posts.include?(post) %>
-    <% like_count = post.likes.count %>
-
-    <% if liked %>
-      <%= button_to post_like_path(post), method: :delete, class: "btn btn-link p-0", form: { class: "d-inline" } do %>
-        <i class="fas fa-heart text-danger"></i>
+    <% if user_signed_in? && !current_user.guest_user? %>
+      <% liked = current_user.liked_posts.include?(post) %>
+      <% if liked %>
+        <%= button_to post_like_path(post), method: :delete, class: "btn btn-link p-0", form: { class: "d-inline" } do %>
+          <i class="fas fa-heart text-danger"></i>
+        <% end %>
+      <% else %>
+        <%= button_to post_like_path(post), method: :post, class: "btn btn-link p-0", form: { class: "d-inline" } do %>
+          <% if like_count.zero? %>
+            <i class="fas fa-heart text-primary"></i>
+          <% else %>
+            <i class="fas fa-heart text-danger"></i>
+          <% end %>
+        <% end %>
       <% end %>
-    <% else %>
-      <%= button_to post_like_path(post), method: :post, class: "btn btn-link p-0", form: { class: "d-inline" } do %>
+
+    <% elsif user_signed_in? && current_user.guest_user? || !user_signed_in? %>
+      <button type="button" class="btn btn-link p-0" onclick="alert('いいね機能を利用するにはログインしてください。')" title="ログインしてください">
         <% if like_count.zero? %>
-          <i class="fas fa-heart text-primary"></i>
+          <i class="fas fa-heart text-danger"></i>
         <% else %>
           <i class="fas fa-heart text-danger"></i>
         <% end %>
-      <% end %>
+      </button>
     <% end %>
 
     <% if like_count.zero? %>
@@ -53,8 +62,6 @@
       <span class="text-danger"><%= like_count %></span>
     <% end %>
   </div>
-<% end %>
-
 
   <p>投稿者:
     <% if post.user.avatar.attached? %>

@@ -10,10 +10,10 @@
   </div>
 <% end %>
 
-<% if user_signed_in? %>
-  <div class="mb-3 d-flex align-items-center" style="gap: 5px; font-size: 1.2rem;">
+<% like_count = @post.likes.count %>
+<div class="mb-3 d-flex align-items-center" style="gap: 5px; font-size: 1.2rem;">
+  <% if user_signed_in? && !current_user.guest_user? %>
     <% liked = current_user.liked_posts.include?(@post) %>
-    <% like_count = @post.likes.count %>
 
     <% if liked %>
       <%= button_to post_like_path(@post), method: :delete, class: "btn btn-link p-0", form: { class: "d-inline" } do %>
@@ -22,20 +22,29 @@
     <% else %>
       <%= button_to post_like_path(@post), method: :post, class: "btn btn-link p-0", form: { class: "d-inline" } do %>
         <% if like_count.zero? %>
-          <i class="fas fa-heart text-primary"></i> <!-- 青い塗りつぶし -->
+          <i class="fas fa-heart text-primary"></i> 
         <% else %>
-          <i class="fas fa-heart text-danger"></i> <!-- 赤い塗りつぶし -->
+          <i class="fas fa-heart text-danger"></i> 
         <% end %>
       <% end %>
     <% end %>
 
-    <% if like_count.zero? %>
-      <span class="text-primary"><%= like_count %></span>
-    <% else %>
-      <span class="text-danger"><%= like_count %></span>
+    <% else %> 
+      <button type="button" class="btn btn-link p-0" onclick="alert('いいね機能を利用するにはログインしてください。')" title="ログインしてください">
+        <% if like_count.zero? %>
+          <i class="fas fa-heart text-danger"></i>
+        <% else %>
+          <i class="fas fa-heart text-danger"></i>
+        <% end %>
+      </button>
     <% end %>
-  </div>
-<% end %>
+
+  <% if like_count.zero? %>
+    <span class="text-primary"><%= like_count %></span>
+  <% else %>
+    <span class="text-danger"><%= like_count %></span>
+  <% end %>
+</div>
 
 <p>
   <% if @post.user.avatar.attached? %>
