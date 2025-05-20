@@ -65,6 +65,10 @@ class Public::PostsController < ApplicationController
     @posts = Post.where("caption LIKE ?", "%#{params[:keyword]}%")
   end
   
+  def feed
+    @posts = Post.where(user_id: current_user.followings.pluck(:id)).order(created_at: :desc)
+  end
+
   private
 
   def post_params

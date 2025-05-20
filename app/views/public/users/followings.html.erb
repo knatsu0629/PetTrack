@@ -1,0 +1,18 @@
+<h2><%= @user.name %> さんがフォローしているユーザー</h2>
+
+<% if @users.any? %>
+  <ul>
+    <% @users.each do |user| %>
+      <li>
+        <% if user.avatar.attached? %>
+          <%= image_tag user.avatar.variant(resize: "50x50"), class: "rounded-circle", alt: user.name %>
+        <% end %>
+        <%= link_to user.name, user_path(user) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>フォローしているユーザーはいません。</p>
+<% end %>
+
+<%= link_to '戻る', user_path(@user), class: 'btn btn-secondary', style: 'margin-top: 20px;' %>

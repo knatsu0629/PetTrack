@@ -17,7 +17,7 @@ class Public::UsersController < ApplicationController
   end
 
   def show
-    @user = current_user
+    @user = User.find(params[:id])
   end
 
   def edit
@@ -43,6 +43,15 @@ class Public::UsersController < ApplicationController
     @users = User.where("name LIKE ?", "%#{params[:keyword]}%")
   end
 
+  def followings
+    @user = User.find(params[:id])
+    @users = @user.followings
+  end
+  
+  def followers
+    @user = User.find(params[:id])
+    @users = @user.followers
+  end
   
   private
 

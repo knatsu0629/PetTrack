@@ -1,5 +1,19 @@
 <h2><%= @user.name %> さんのプロフィール</h2>
 
+<% unless current_user == @user %>
+  <% if current_user.following?(@user) %>
+    <%= button_to 'フォロー解除', relationship_path(current_user.active_relationships.find_by(followed_id: @user.id)),
+                  method: :delete,
+                  class: "btn btn-outline-danger",
+                  data: { confirm: "本当にフォローを解除しますか？" } %>
+  <% else %>
+    <%= button_to 'フォローする', relationships_path(followed_id: @user.id),
+                  method: :post,
+                  class: "btn btn-primary" %>
+  <% end %>
+<% end %>
+
+
 <% if @user.avatar.attached? %>
   <%= image_tag @user.avatar.variant(resize: "100x100"), class: "rounded-circle", alt: @user.name %>
 <% else %>
@@ -14,6 +28,12 @@
 <% else %>
   <p>自己紹介はまだありません。</p>
 <% end %>
+
+<div style="margin-top: 2em;">
+  <%= link_to 'フォロー一覧', followings_user_path(@user) %> |
+  <%= link_to 'フォロワー一覧', followers_user_path(@user) %>
+</div>
+
 
 <div style="margin-top: 2em;">
  <%= link_to 'ユーザー情報を編集', edit_user_path(current_user) %> |

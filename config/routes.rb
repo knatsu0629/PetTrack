@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'relationships/create'
+  get 'relationships/destroy'
   devise_for :admin, skip: [:registrations, :password], controllers: {
     sessions: 'admin/sessions'
   }
@@ -17,6 +19,7 @@ Rails.application.routes.draw do
     get '/about', to: 'homes#about'
     get "search", to: "searches#search"
     get 'likes', to: 'likes#index', as: 'liked_posts'
+    get 'feed', to: 'posts#feed', as: 'feed'
 
     resources :posts, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
       resources :comments, only: [:create, :destroy]
@@ -27,10 +30,16 @@ Rails.application.routes.draw do
       resources :lost_pet_comments, only: [:index, :create, :destroy]
     end
 
-    resources :users, only: [:show, :edit, :update, :destroy]
-    
-  end
+    resources :users, only: [:show, :edit, :update, :destroy] do
+      member do
+        get :followings
+        get :followers
+      end
+    end
 
+    resources :relationships, only: [:create, :destroy]
+  end
+  
   namespace :admin do
     root to: 'users#index'
     resources :users, only: [:index, :show, :edit, :update, :destroy]
