@@ -1,5 +1,15 @@
 <h2><%= @user.name %> さんのプロフィール</h2>
 
+<div>
+  <strong>フォロー中：</strong>
+  <%= @following_count %>人
+</div>
+
+<div>
+  <strong>フォロワー：</strong>
+  <%= @followers_count %>人
+</div>
+
 <% unless current_user == @user %>
   <% if current_user.following?(@user) %>
     <%= button_to 'フォロー解除', relationship_path(current_user.active_relationships.find_by(followed_id: @user.id)),

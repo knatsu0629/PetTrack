@@ -18,6 +18,8 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @following_count = @user.followings.count
+    @followers_count = @user.followers.count
   end
 
   def edit
