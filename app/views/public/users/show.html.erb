@@ -1,53 +1,37 @@
-<h2><%= @user.name %> さんのプロフィール</h2>
-
-<div>
-  <strong>フォロー中：</strong>
-  <%= @following_count %>人
-</div>
-
-<div>
-  <strong>フォロワー：</strong>
-  <%= @followers_count %>人
-</div>
-
-<% unless current_user == @user %>
-  <% if current_user.following?(@user) %>
-    <%= button_to 'フォロー解除', relationship_path(current_user.active_relationships.find_by(followed_id: @user.id)),
-                  method: :delete,
-                  class: "btn btn-outline-danger",
-                  data: { confirm: "本当にフォローを解除しますか？" } %>
-  <% else %>
-    <%= button_to 'フォローする', relationships_path(followed_id: @user.id),
-                  method: :post,
-                  class: "btn btn-primary" %>
+<div class="card text-center p-4 mb-4">
+  <% if @user.avatar.attached? %>
+    <%= image_tag @user.avatar.variant(resize: "100x100"), class: "rounded-circle mx-auto mb-3", alt: @user.name %>
   <% end %>
-<% end %>
 
+  <h4><%= @user.name %></h4>
+  <p class="text-muted"><%= @user.email %></p>
 
-<% if @user.avatar.attached? %>
-  <%= image_tag @user.avatar.variant(resize: "100x100"), class: "rounded-circle", alt: @user.name %>
-<% else %>
-  <p>プロフィール画像は未登録です</p>
-<% end %>
+  <p><strong>フォロー：</strong><%= @following_count %> / <strong>フォロワー：</strong><%= @followers_count %></p>
 
-<p>メールアドレス: <%= @user.email %></p>
+  <% if @user.introduction.present? %>
+    <p class="mt-2"><%= simple_format(@user.introduction) %></p>
+  <% else %>
+    <p class="text-muted">自己紹介はまだありません。</p>
+  <% end %>
 
-<% if @user.introduction.present? %>
-  <h3>自己紹介</h3>
-  <p><%= simple_format(@user.introduction) %></p>
-<% else %>
-  <p>自己紹介はまだありません。</p>
-<% end %>
+  <% unless current_user == @user %>
+    <% if current_user.following?(@user) %>
+      <%= button_to 'フォロー解除', relationship_path(current_user.active_relationships.find_by(followed_id: @user.id)),
+                    method: :delete, class: "btn btn-outline-danger btn-sm mt-2" %>
+    <% else %>
+      <%= button_to 'フォローする', relationships_path(followed_id: @user.id),
+                    method: :post, class: "btn btn-primary btn-sm mt-2" %>
+    <% end %>
+  <% end %>
 
-<div style="margin-top: 2em;">
-  <%= link_to 'フォロー一覧', followings_user_path(@user) %> |
-  <%= link_to 'フォロワー一覧', followers_user_path(@user) %>
+  <% if current_user == @user %>
+    <div class="mt-2">
+      <%= link_to '編集', edit_user_path(current_user), class: "btn btn-primary btn-sm me-2" %>
+      <%= link_to '退会', user_path(current_user), method: :delete, data: { confirm: '退会しますか？' }, class: "btn btn-danger btn-sm" %>
+    </div>
+  <% end %>
 </div>
 
-
-<div style="margin-top: 2em;">
- <%= link_to 'ユーザー情報を編集', edit_user_path(current_user) %> |
- <%= link_to '退会', user_path(current_user), method: :delete, data: { confirm: '本当に退会しますか？' } %>
+<div class="text-center mt-2">
+  <%= link_to '← 戻る', request.referer || root_path, class: 'text-muted small d-block', style: 'text-align: left; padding-left: 1rem;' %>
 </div>
-
-<%= link_to '戻る', request.referer || root_path, class: 'btn btn-secondary', style: 'margin-top: 20px;' %>
