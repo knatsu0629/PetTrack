@@ -33,6 +33,10 @@ class User < ApplicationRecord
     followings.include?(other_user)
   end
 
+  def feed
+    Post.where(user_id: followings.select(:id)).or(Post.where(user_id: self.id))
+  end
+  
 
   has_one_attached :avatar
   has_many :posts, dependent: :destroy

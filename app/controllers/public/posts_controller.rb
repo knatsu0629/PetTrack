@@ -18,7 +18,11 @@ class Public::PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.all
+    if params[:filter] == "following" && user_signed_in?
+      @posts = Post.where(user_id: current_user.following_ids).order(created_at: :desc)
+    else
+      @posts = Post.all.order(created_at: :desc)
+    end
   end
 
   def show
