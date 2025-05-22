@@ -1,37 +1,65 @@
-<div class="card text-center p-4 mb-4">
-  <% if @user.avatar.attached? %>
-    <%= image_tag @user.avatar.variant(resize: "100x100"), class: "rounded-circle mx-auto mb-3", alt: @user.name %>
-  <% end %>
+<div class="container">
 
-  <h4><%= @user.name %></h4>
-  <p class="text-muted"><%= @user.email %></p>
-
-  <p><strong>フォロー：</strong><%= @following_count %> / <strong>フォロワー：</strong><%= @followers_count %></p>
-
-  <% if @user.introduction.present? %>
-    <p class="mt-2"><%= simple_format(@user.introduction) %></p>
-  <% else %>
-    <p class="text-muted">自己紹介はまだありません。</p>
-  <% end %>
-
-  <% unless current_user == @user %>
-    <% if current_user.following?(@user) %>
-      <%= button_to 'フォロー解除', relationship_path(current_user.active_relationships.find_by(followed_id: @user.id)),
-                    method: :delete, class: "btn btn-outline-danger btn-sm mt-2" %>
-    <% else %>
-      <%= button_to 'フォローする', relationships_path(followed_id: @user.id),
-                    method: :post, class: "btn btn-primary btn-sm mt-2" %>
+  <div class="d-flex align-items-center mb-3 border-bottom pb-3">
+    <% if @user.avatar.attached? %>
+      <%= image_tag @user.avatar.variant(resize: "80x80"), class: "rounded-circle me-3", alt: @user.name %>
     <% end %>
-  <% end %>
+    <div>
+      <h3 class="mb-1"><%= @user.name %></h3>
+      <p class="text-muted mb-0"><%= @user.email %></p>
+      <p class="text-muted small">登録日：<%= @user.created_at.strftime("%Y年%m月%d日") %></p>
+    </div>
+  </div>
 
-  <% if current_user == @user %>
-    <div class="mt-2">
-      <%= link_to '編集', edit_user_path(current_user), class: "btn btn-primary btn-sm me-2" %>
-      <%= link_to '退会', user_path(current_user), method: :delete, data: { confirm: '退会しますか？' }, class: "btn btn-danger btn-sm" %>
+
+  <div class="d-flex mb-3">
+    <div class="text-center" style="margin-right: 1.5rem;">
+      <%= link_to followings_user_path(@user), class: "text-decoration-none text-dark" do %>
+        <div class="fw-bold">フォロー</div>
+        <div class="fs-4 text-primary"><%= @following_count %></div>
+      <% end %>
+    </div>
+
+    <div class="text-center" style="margin-right: 1.5rem;">
+      <%= link_to followers_user_path(@user), class: "text-decoration-none text-dark" do %>
+        <div class="fw-bold">フォロワー</div>
+        <div class="fs-4 text-primary"><%= @followers_count %></div>
+      <% end %>
+    </div>
+
+    <div class="text-center">
+      <div class="fw-bold">投稿数</div>
+      <div class="fs-4"><%= @user.posts.count %></div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <div class="fw-bold mb-1">自己紹介</div>
+    <% if @user.introduction.present? %>
+      <p><%= simple_format(@user.introduction) %></p>
+    <% else %>
+      <p class="text-muted">自己紹介はまだありません。</p>
+    <% end %>
+  </div>
+
+  <% if current_user != @user %>
+    <div class="mb-3">
+      <% if current_user.following?(@user) %>
+        <%= button_to 'フォロー解除', relationship_path(current_user.active_relationships.find_by(followed_id: @user.id)),
+                      method: :delete, class: "btn btn-outline-danger btn-sm" %>
+      <% else %>
+        <%= button_to 'フォローする', relationships_path(followed_id: @user.id),
+                      method: :post, class: "btn btn-primary btn-sm" %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="mb-3">
+      <%= link_to 'プロフィール編集', edit_user_path(@user), class: "btn btn-outline-primary btn-sm me-2" %>
+      <%= link_to '退会', user_path(@user), method: :delete, data: { confirm: '退会しますか？' }, class: "btn btn-outline-danger btn-sm" %>
     </div>
   <% end %>
-</div>
 
-<div class="text-center mt-2">
-  <%= link_to '← 戻る', request.referer || root_path, class: 'text-muted small d-block', style: 'text-align: left; padding-left: 1rem;' %>
+  <div class="mt-4">
+    <%= link_to '← 戻る', request.referer || root_path, class: 'text-muted small' %>
+  </div>
 </div>
