@@ -13,6 +13,12 @@ class LostPet < ApplicationRecord
         "不明"
       end
     end
+
+  validates :address, presence: true
+
+  geocoded_by :address
+  after_validation :geocode
+
 end
 
 

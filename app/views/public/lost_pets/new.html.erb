@@ -56,18 +56,18 @@
           </div>
 
           <div class="form-group">
-            <%= form.label :last_seen_location, '最終目撃場所' %>
+            <%= form.label :last_seen_location, '迷子になったおおまかな場所' %>
             <%= form.text_field :last_seen_location, class: 'form-control' %>
           </div>
 
           <div class="form-group">
-            <%= form.label :latitude, '緯度' %>
-            <%= form.text_field :latitude, class: 'form-control' %>
+            <label for="zipcode">迷子になった郵便番号</label>
+            <%= text_field_tag :zipcode, nil, class: "form-control", placeholder: "郵便番号", id: "zipcode" %>
           </div>
 
           <div class="form-group">
-            <%= form.label :longitude, '経度' %>
-            <%= form.text_field :longitude, class: 'form-control' %>
+            <%= form.label :address, '迷子になった住所' %>
+            <%= form.text_field :address, class: "form-control", placeholder: "住所", id: "lost_pet_address" %>
           </div>
 
           <div class="form-group">
@@ -82,5 +82,6 @@
       </div>
     </div>
   </div>
+  <%= javascript_pack_tag "jpostal",  'data-turbolinks-track': 'reload' %>
 </main>
 

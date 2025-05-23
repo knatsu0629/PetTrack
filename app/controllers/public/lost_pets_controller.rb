@@ -56,7 +56,7 @@ private
   def lost_pet_params
     params.require(:lost_pet).permit(
       :title, :name, :animal_type, :gender, :feature, :description,
-      :missing_date, :last_seen_location, :latitude, :longitude, :status, :image
+      :missing_date, :last_seen_location, :latitude, :longitude, :status, :image, :address
       ).merge(gender: params[:lost_pet][:gender].to_i)
   end
 

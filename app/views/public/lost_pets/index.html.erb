@@ -43,11 +43,7 @@
                 <dt class="col-4">説明:</dt><dd class="col-8"><%= lost_pet.description.truncate(100) %></dd>
                 <dt class="col-4">最終目撃場所:</dt><dd class="col-8"> <%= lost_pet.last_seen_location %></dd>
                 <dt class="col-4">行方不明日:</dt><dd class="col-8"> <%= lost_pet.missing_date.strftime('%Y年%m月%d日') %></dd>
-                <dt class="col-4">位置情報</dt>
-                <dd class="col-8 text-muted small">
-                  緯度: <%= lost_pet.latitude %><br>
-                  経度: <%= lost_pet.longitude %>
-                </dd>
+                <dt class="col-4">位置情報:</dt><dd class="col-8"> <%= lost_pet.address %></dd>
                 <dt class="col-4">ステータス:</dt><dd class="col-8"> <%= lost_pet.status == 0 ? '未発見' : '発見' %></dd>
                 <dt class="col-4">💬 コメント数:</dt><dd class="col-8"> <%= lost_pet.lost_pet_comments.count %> 件</dd>
                 <dt class="col-4">投稿者:</dt>
