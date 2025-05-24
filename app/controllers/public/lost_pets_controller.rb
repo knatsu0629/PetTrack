@@ -7,6 +7,14 @@ class Public::LostPetsController < ApplicationController
 
   def index
     @lost_pets = LostPet.all
+    respond_to do |format|
+      format.html do
+        @post_images = PostImage.page(params[:page])
+      end
+      format.json do
+        @post_images = PostImage.all
+      end
+    end
   end
 
   def show
