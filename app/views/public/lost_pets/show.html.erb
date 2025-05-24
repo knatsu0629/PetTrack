@@ -13,10 +13,16 @@
 <p><strong>種類:</strong> <%= @lost_pet.animal_type %></p>
 <p><strong>特徴:</strong> <%= @lost_pet.feature %></p>
 <p><strong>説明:</strong> <%= @lost_pet.description %></p>
-<p><strong>行方不明日:</strong> <%= @lost_pet.missing_date.strftime("%Y年%m月%d日") %></p>
 <p><strong>最終目撃場所:</strong> <%= @lost_pet.last_seen_location %></p>
-<p><strong>緯度:</strong> <%= @lost_pet.latitude %></p>
-<p><strong>経度:</strong> <%= @lost_pet.longitude %></p>
+<p><strong>行方不明日:</strong> <%= @lost_pet.missing_date.strftime("%Y年%m月%d日") %></p>
+<p><strong>位置情報:</strong> <%= @lost_pet.address %></p>
+
+<div class="container my-4">
+  <h2>地図で確認</h2>
+    <div id="map"></div>
+</div>
+<%= javascript_pack_tag 'map', 'data-turbolinks-track': 'reload' %>
+
 <p><strong>ステータス:</strong> <%= @lost_pet.status == 0 ? "未発見" : "発見済み" %></p>
 <p><strong>投稿者:</strong> 
   <% if @lost_pet.user.avatar.attached? %>
