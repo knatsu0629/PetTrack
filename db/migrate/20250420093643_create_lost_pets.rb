@@ -9,8 +9,6 @@ class CreateLostPets < ActiveRecord::Migration[6.1]
       t.text :description
       t.date :missing_date
       t.string :last_seen_location
-      t.decimal :latitude, precision: 10, scale: 6
-      t.decimal :longitude, precision: 10, scale: 6
       t.integer :status, default: 0
       t.references :user, null: false, foreign_key: true
 

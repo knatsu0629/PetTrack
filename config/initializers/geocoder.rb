@@ -1,8 +1,9 @@
 Geocoder.configure(
   lookup: :google,
   use_https: true,
-  api_key: ENV["AIzaSyDzf2MkwY6zr-oUp6t91itFJcv9Pa5av6s"],
+  api_key: Rails.application.credentials.google[:geocoding_api_key], 
   units: :km
+
 
   # Geocoding options
   # timeout: 3,                 # geocoding service timeout (secs)

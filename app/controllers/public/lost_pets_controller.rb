@@ -6,16 +6,32 @@ class Public::LostPetsController < ApplicationController
 
 
   def index
-    @lost_pets = LostPet.all
+    @lost_pets = LostPet.page(params[:page])
     respond_to do |format|
-      format.html do
-        @post_images = PostImage.page(params[:page])
-      end
+      format.html
       format.json do
-        @post_images = PostImage.all
+        render json: {
+          data: {
+            items: LostPet.all.map do |pet|
+              {
+                id: pet.id,
+                title: pet.title,
+                name: pet.name,
+                gender: pet.gender,
+                animal_type: pet.animal_type,
+                feature: pet.feature,
+                latitude: pet.latitude,
+                longitude: pet.longitude,
+                image_url: pet.image.attached? ? url_for(pet.image) : nil,
+                last_seen_location: pet.last_seen_location
+              }
+            end
+          }
+        }
       end
     end
   end
+  
 
   def show
     @lost_pet = LostPet.find(params[:id])
