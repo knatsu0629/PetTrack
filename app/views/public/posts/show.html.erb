@@ -10,6 +10,14 @@
   </div>
 <% end %>
 
+<% if @post.tags.any? %>
+  <div style="margin-bottom: 20px;">
+    <% @post.tags.each do |tag| %>
+      <%= link_to "##{tag.name}", tag_path(tag), class: "badge bg-secondary text-white me-1", style: "font-size: 0.9rem;" %>
+    <% end %>
+  </div>
+<% end %>
+
 <% like_count = @post.likes.count %>
 <div class="mb-3 d-flex align-items-center" style="gap: 5px; font-size: 1.2rem;">
   <% if user_signed_in? && !current_user.guest_user? %>

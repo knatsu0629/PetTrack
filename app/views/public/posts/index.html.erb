@@ -35,6 +35,14 @@
           <%= link_to post.title, post_path(post), class: "text-decoration-none text-dark" %>
         </h5>
 
+        <% if post.tags.any? %>
+          <div class="mb-2">
+            <% post.tags.each do |tag| %>
+              <%= link_to "##{tag.name}", tag_path(tag), class: "badge bg-secondary text-white me-1" %>
+            <% end %>
+          </div>
+        <% end %>
+
         <p class="card-text text-muted"><%= truncate(post.body, length: 100) %></p>
 
         <% like_count = post.likes.count %>

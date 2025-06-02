@@ -1,0 +1,19 @@
+<div>
+  <%= form.label :title, "タイトル" %><br>
+  <%= form.text_field :title %>
+</div>
+
+<div>
+  <%= form.label :body, "本文" %><br>
+  <%= form.text_area :body %>
+</div>
+
+<div>
+  <%= form.label :image %><br>
+  <%= form.file_field :image %>
+</div>
+
+<div class="field">
+  <%= form.label :tag_names, "タグ（カンマ区切り）" %>
+  <%= form.text_field :tag_names, value: form.object.tags.map(&:name).join(", ") %>
+</div>

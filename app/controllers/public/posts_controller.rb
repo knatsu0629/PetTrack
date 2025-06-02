@@ -39,6 +39,7 @@ class Public::PostsController < ApplicationController
     @post.user_id = current_user.id
 
     if @post.save
+      save_tags(@post, params[:tag_names])
       redirect_to posts_path
     else
       flash.now[:alert] = "投稿に失敗しました。"
@@ -53,6 +54,7 @@ class Public::PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     if @post.update(post_params)
+      save_tags(@post, params[:tag_names])
       redirect_to post_path(@post.id)
     else
       render :edit
@@ -76,6 +78,15 @@ class Public::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :body, :image)
+    params.require(:post).permit(:title, :body, :image, :tag_names)
+  end
+
+  def save_tags(post, tag_names)
+    return if tag_names.blank?
+  
+    tag_list = tag_names.split(',').map(&:strip).uniq
+    tags = tag_list.map { |name| Tag.find_or_create_by(name: name) }
+  
+    post.tags = tags
   end
 end

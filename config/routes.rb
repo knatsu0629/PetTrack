@@ -39,6 +39,8 @@ Rails.application.routes.draw do
 
     resources :relationships, only: [:create, :destroy]
   end
+
+    resources :tags, only: [:show, :index]
   
   namespace :admin do
     root to: 'users#index'
