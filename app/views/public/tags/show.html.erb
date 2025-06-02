@@ -1,0 +1,12 @@
+<h2>タグ「<%= @tag.name %>」の投稿一覧</h2>
+
+<% if @posts.any? %>
+  <% @posts.each do |post| %>
+    <div class="mb-4">
+      <h4><%= link_to post.title, post_path(post) %></h4>
+      <p><%= truncate(post.body, length: 100) %></p>
+    </div>
+  <% end %>
+<% else %>
+  <p>このタグに投稿はありません。</p>
+<% end %>
