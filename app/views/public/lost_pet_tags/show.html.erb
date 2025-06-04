@@ -1,0 +1,24 @@
+<h1>タグ: <%= @tag.name %></h1>
+
+<% if @lost_pets.any? %>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <% @lost_pets.each do |lost_pet| %>
+      <div class="col">
+        <div class="card h-100">
+          <% if lost_pet.image.attached? %>
+            <%= image_tag lost_pet.image, class: 'card-img-top', style: 'object-fit: cover; height: 200px;' %>
+          <% else %>
+            <%= image_tag 'default_image.jpg', class: 'card-img-top', style: 'object-fit: cover; height: 200px;' %>
+          <% end %>
+          <div class="card-body">
+            <h5 class="card-title"><%= lost_pet.title %></h5>
+            <p class="card-text"><%= lost_pet.description.truncate(80) %></p>
+            <%= link_to '詳細', lost_pet_path(lost_pet), class: 'btn btn-primary btn-sm' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>このタグに関連する迷子ペットはありません。</p>
+<% end %>

@@ -39,6 +39,7 @@ Rails.application.routes.draw do
 
     resources :relationships, only: [:create, :destroy]
     resources :tags, only: [:show, :index]
+    resources :lost_pet_tags, only: [:show, :index]
   end
   
   namespace :admin do

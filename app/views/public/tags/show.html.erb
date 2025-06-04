@@ -1,12 +1,24 @@
-<h2>タグ「<%= @tag.name %>」の投稿一覧</h2>
+<h1>タグ: <%= @tag.name %></h1>
 
 <% if @posts.any? %>
-  <% @posts.each do |post| %>
-    <div class="mb-4">
-      <h4><%= link_to post.title, post_path(post) %></h4>
-      <p><%= truncate(post.body, length: 100) %></p>
-    </div>
-  <% end %>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <% @posts.each do |post| %>
+      <div class="col">
+        <div class="card h-100">
+          <% if post.image.attached? %>
+            <%= image_tag post.image, class: 'card-img-top', style: 'object-fit: cover; height: 200px;' %>
+          <% else %>
+            <%= image_tag 'default_image.jpg', class: 'card-img-top', style: 'object-fit: cover; height: 200px;' %>
+          <% end %>
+          <div class="card-body">
+            <h5 class="card-title"><%= post.title %></h5>
+            <p class="card-text"><%= truncate(post.body, length: 80) %></p>
+            <%= link_to '詳細', post_path(post), class: 'btn btn-primary btn-sm' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 <% else %>
-  <p>このタグに投稿はありません。</p>
+  <p>このタグに関連する投稿はありません。</p>
 <% end %>
