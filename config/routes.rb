@@ -41,7 +41,8 @@ Rails.application.routes.draw do
     resources :tags, only: [:show, :index]
     resources :lost_pet_tags, only: [:show, :index]
   end
-  
+
+
   namespace :admin do
     root to: 'users#index'
     resources :users, only: [:index, :show, :edit, :update, :destroy]
