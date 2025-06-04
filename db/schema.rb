@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_06_02_084053) do
+ActiveRecord::Schema.define(version: 2025_06_03_114949) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -81,6 +81,16 @@ ActiveRecord::Schema.define(version: 2025_06_02_084053) do
     t.index ["user_id"], name: "index_lost_pet_comments_on_user_id"
   end
 
+  create_table "lost_pet_tags", force: :cascade do |t|
+    t.integer "lost_pet_id", null: false
+    t.integer "tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lost_pet_id", "tag_id"], name: "index_lost_pet_tags_on_lost_pet_id_and_tag_id", unique: true
+    t.index ["lost_pet_id"], name: "index_lost_pet_tags_on_lost_pet_id"
+    t.index ["tag_id"], name: "index_lost_pet_tags_on_tag_id"
+  end
+
   create_table "lost_pets", force: :cascade do |t|
     t.string "title"
     t.string "name"
@@ -115,6 +125,7 @@ ActiveRecord::Schema.define(version: 2025_06_02_084053) do
     t.integer "tag_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id", "tag_id"], name: "index_posts_tags_on_post_id_and_tag_id", unique: true
     t.index ["post_id"], name: "index_posts_tags_on_post_id"
     t.index ["tag_id"], name: "index_posts_tags_on_tag_id"
   end
@@ -156,6 +167,8 @@ ActiveRecord::Schema.define(version: 2025_06_02_084053) do
   add_foreign_key "likes", "users"
   add_foreign_key "lost_pet_comments", "lost_pets"
   add_foreign_key "lost_pet_comments", "users"
+  add_foreign_key "lost_pet_tags", "lost_pets"
+  add_foreign_key "lost_pet_tags", "tags"
   add_foreign_key "lost_pets", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "posts_tags", "posts"

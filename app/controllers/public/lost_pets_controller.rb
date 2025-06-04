@@ -36,6 +36,8 @@ class Public::LostPetsController < ApplicationController
   def show
     @lost_pet = LostPet.find(params[:id])
     @lost_pet_comments = @lost_pet.lost_pet_comments.includes(:user)
+    @q = LostPet.ransack(params[:q])
+    @lost_pets = @q.result(distinct: true)
   end
 
   def new
@@ -45,6 +47,7 @@ class Public::LostPetsController < ApplicationController
   def create
     @lost_pet = current_user.lost_pets.new(lost_pet_params)
     if @lost_pet.save
+      save_tags(@lost_pet, params[:lost_pet][:tag_names])
       redirect_to lost_pets_path
     else
       render :new
@@ -58,6 +61,7 @@ class Public::LostPetsController < ApplicationController
   def update
     @lost_pet = LostPet.find(params[:id])
     if @lost_pet.update(lost_pet_params)
+      save_tags(@lost_pet, params[:lost_pet][:tag_names])
       redirect_to lost_pet_path(@lost_pet.id), notice: '迷子ペット情報を更新しました。'
     else
       render :edit
@@ -80,7 +84,7 @@ private
   def lost_pet_params
     params.require(:lost_pet).permit(
       :title, :name, :animal_type, :gender, :feature, :description,
-      :missing_date, :last_seen_location, :latitude, :longitude, :status, :image, :address
+      :missing_date, :last_seen_location, :latitude, :longitude, :status, :image, :address, :tag_list
       ).merge(gender: params[:lost_pet][:gender].to_i)
   end
 
@@ -95,6 +99,14 @@ private
     if current_user&.guest_user?
       redirect_to lost_pets_path
     end
+  end
+
+  def save_tags(lost_pet, tag_names)
+    return if tag_names.blank?
+
+    tag_list = tag_names.split(/[,\s ]+/).uniq
+    tags = tag_list.map { |name| Tag.find_or_create_by(name: name.strip) }
+    lost_pet.tags = tags
   end
 end
 

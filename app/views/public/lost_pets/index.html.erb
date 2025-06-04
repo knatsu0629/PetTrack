@@ -45,6 +45,12 @@
                 <dt class="col-4">種類:</dt><dd class="col-8"> <%= lost_pet.animal_type %></dd>       
                 <dt class="col-4">特徴:</dt><dd class="col-8"> <%= lost_pet.feature %></dd>
                 <dt class="col-4">説明:</dt><dd class="col-8"><%= lost_pet.description.truncate(100) %></dd>
+                <dt class="col-4">タグ:</dt>
+                <dd class="col-8">
+                  <% lost_pet.tags.each do |tag| %>
+                    <%= link_to "##{tag.name}", tag_path(tag), class: "badge bg-secondary text-white me-1" %>
+                  <% end %>
+                </dd>                
                 <dt class="col-4">最終目撃場所:</dt><dd class="col-8"> <%= lost_pet.last_seen_location %></dd>
                 <dt class="col-4">行方不明日:</dt><dd class="col-8"> <%= lost_pet.missing_date.strftime('%Y年%m月%d日') %></dd>
                 <dt class="col-4">位置情報:</dt><dd class="col-8"> <%= lost_pet.address %></dd>

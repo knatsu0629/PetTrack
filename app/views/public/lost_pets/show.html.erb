@@ -14,11 +14,20 @@
 <p><strong>特徴:</strong> <%= @lost_pet.feature %></p>
 <p><strong>説明:</strong> <%= @lost_pet.description %></p>
 <p><strong>最終目撃場所:</strong> <%= @lost_pet.last_seen_location %></p>
+<p><strong>タグ:</strong>
+  <% if @lost_pet.tags.any? %>
+    <% @lost_pet.tags.each do |tag| %>
+      <span class="badge bg-secondary me-1"><%= tag.name %></span>
+    <% end %>
+  <% else %>
+    <span>タグはありません</span>
+  <% end %>
+</p>
 <p><strong>行方不明日:</strong> <%= @lost_pet.missing_date.strftime("%Y年%m月%d日") %></p>
 <p><strong>位置情報:</strong> <%= @lost_pet.address %></p>
-
 <div class="container my-4">
-  <h2>地図で確認</h2>
+
+<h2>地図で確認</h2>
   <div id="map"
        data-latitude="<%= @lost_pet.latitude %>"
        data-longitude="<%= @lost_pet.longitude %>"

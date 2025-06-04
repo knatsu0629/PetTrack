@@ -13,7 +13,7 @@
 
 <%= form_with model: @post, local: true, html: { multipart: true } do |form| %>
   <%= render 'public/shared/post_form', form: form %>
-  <div>
+  <div class="mt-3">
     <%= form.submit '投稿' %>
   </div>
 <% end %>

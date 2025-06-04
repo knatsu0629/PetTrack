@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lost_pet: one
+  tag: one
+
+two:
+  lost_pet: two
+  tag: two

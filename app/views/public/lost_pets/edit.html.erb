@@ -1,70 +1,7 @@
 <h1>迷子ペット情報の編集</h1>
 
-<%= form_with(model: @lost_pet, local: true) do |form| %>
-  <% if @lost_pet.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@lost_pet.errors.count, "エラー") %>があります:</h2>
-      <ul>
-        <% @lost_pet.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= form.label :title, "タイトル" %>
-    <%= form.text_field :title, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :name, "ペットの名前" %>
-    <%= form.text_field :name, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :gender, "性別" %>
-    <%= form.select :gender, LostPet.genders.keys.map { |g| [g.titleize, g] }, {}, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :animal_type, "種類（例: 柴犬）" %>
-    <%= form.text_field :animal_type, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :feature, "特徴" %>
-    <%= form.text_area :feature, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :description, "説明" %>
-    <%= form.text_area :description, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :missing_date, "行方不明日" %>
-    <%= form.date_field :missing_date, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :last_seen_location, "最終目撃場所" %>
-    <%= form.text_field :last_seen_location, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :image, "画像" %><br>
-    <% if @lost_pet.image.attached? %>
-      <%= image_tag @lost_pet.image, style: "max-width: 300px;" %><br>
-    <% end %>
-    <%= form.file_field :image %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :status, "ステータス" %>
-    <%= form.select :status, [["未発見", 0], ["発見済み", 1]], {}, class: "form-control" %>
-  </div>
-
+<%= form_with model: @lost_pet, local: true, html: { multipart: true } do |form| %>
+  <%= render 'public/shared/lost_pets_form', form: form %>
   <%= form.submit "更新する", class: "btn btn-primary" %>
   <%= link_to 'キャンセル', lost_pet_path(@lost_pet), class: "btn btn-secondary" %>
 <% end %>

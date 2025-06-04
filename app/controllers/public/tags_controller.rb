@@ -8,4 +8,3 @@ class Public::TagsController < ApplicationController
     @posts = @tag.posts.order(created_at: :desc)
   end
 end
-

@@ -1,19 +1,19 @@
 <div>
   <%= form.label :title, "タイトル" %><br>
-  <%= form.text_field :title %>
+  <%= form.text_field :title, class: 'form-control' %>
 </div>
 
 <div>
   <%= form.label :body, "本文" %><br>
-  <%= form.text_area :body %>
+  <%= form.text_area :body, class: 'form-control' %>
 </div>
 
 <div>
-  <%= form.label :image %><br>
+  <%= form.label :image, "画像アップロード" %><br>
   <%= form.file_field :image %>
 </div>
 
-<div class="field">
+<div class="field mt-3">
   <%= form.label :tag_names, "タグ（カンマ区切り）" %>
-  <%= form.text_field :tag_names, value: form.object.tags.map(&:name).join(", ") %>
+  <%= form.text_field :tag_names, value: form.object.tags.map(&:name).join(", "), class: 'form-control' %>
 </div>
