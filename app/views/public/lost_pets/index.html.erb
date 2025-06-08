@@ -9,13 +9,12 @@
     <% if user_signed_in? && !current_user.guest_user? %>
       <%= link_to '＋ 迷子ペットを投稿する', new_lost_pet_path, class: 'btn btn-success mb-4' %>
     <% end %>
+  <div id="map"
+    style="width: 100%; height: 400px; margin-bottom: 2rem;"
+    data-latitude=""
+    data-longitude=""
+    data-default-image-url="<%= asset_path('default_image.jpg') %>">
   </div>
-
-  <div id="map" 
-    data-default-image-url="<%= asset_path('default_image.jpg') %>" 
-    style="width: 100%; height: 400px;" class="mb-4">
-  </div>
-
 
   <div class="container">
     <div class="row row-cols-1 row-cols-md-3 g-4">

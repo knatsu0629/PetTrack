@@ -1,9 +1,9 @@
 Geocoder.configure(
   lookup: :google,
   use_https: true,
-  api_key: Rails.application.credentials.google[:geocoding_api_key], 
+  api_key: ENV['Geocoding_API_Key'],
   units: :km
-
+)
 
   # Geocoding options
   # timeout: 3,                 # geocoding service timeout (secs)
@@ -30,4 +30,3 @@ Geocoder.configure(
   #   expiration: 2.days,
   #   prefix: 'geocoder:'
   # }
-)

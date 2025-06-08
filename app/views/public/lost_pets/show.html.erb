@@ -17,7 +17,7 @@
 <p><strong>タグ:</strong>
   <% if @lost_pet.tags.any? %>
     <% @lost_pet.tags.each do |tag| %>
-      <span class="badge bg-secondary me-1"><%= tag.name %></span>
+      <span class="badge bg-secondary text-white me-1"><%= tag.name %></span>
     <% end %>
   <% else %>
     <span>タグはありません</span>
@@ -35,7 +35,6 @@
   </div>
 </div>
 <%= javascript_pack_tag 'map', 'data-turbolinks-track': 'reload' %>
-
 
 <p><strong>ステータス:</strong> <%= @lost_pet.status == 0 ? "未発見" : "発見済み" %></p>
 <p><strong>投稿者:</strong> 

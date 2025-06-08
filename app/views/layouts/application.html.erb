@@ -9,6 +9,7 @@
     <script src="https://kit.fontawesome.com/91aa0a6112.js" crossorigin="anonymous"></script>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'map', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body class="d-flex flex-column vh-100" style="padding-left: 20px; padding-right: 20px;">
@@ -87,5 +88,8 @@
       © PetTrack
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/jquery-jpostal-ja@2.14.45/jquery.jpostal.min.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['Maps_API_Key'] %>&libraries=places&callback=initMap"></script>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['Maps_API_Key'] %>&callback=initMap&libraries=places,marker">
+    </script>
+  </body>
 </html>
