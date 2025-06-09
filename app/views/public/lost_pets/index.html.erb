@@ -64,8 +64,16 @@
                     <div>
                       <%= link_to lost_pet.user.name, user_path(lost_pet.user), class: "fw-bold d-block" %>
                         <small class="text-muted">
-                          <%= time_ago = time_ago_in_words(lost_pet.created_at)
-                            time_ago.sub('about', '').gsub('days', '日').gsub('day', '日').gsub('hour', '時間').gsub('hours', '時間').gsub('minute', '分').gsub('minutes', '分') + '前に投稿' %>
+                          <% time_ago_raw = time_ago_in_words(lost_pet.created_at) %>
+                          <% formatted_time = time_ago_raw.strip
+                                                          .sub('about', '')
+                                                          .gsub('minutes', '分')
+                                                          .gsub('minute', '分')
+                                                          .gsub('hours', '時間')
+                                                          .gsub('hour', '時間')
+                                                          .gsub('days', '日')
+                                                          .gsub('day', '日') %>
+                          <%= formatted_time + '前に投稿' %>
                         </small>
                     </div>
                   </div>
