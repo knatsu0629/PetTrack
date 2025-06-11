@@ -4,7 +4,7 @@
   <% @liked_posts.each do |post| %>
     <div class="mb-3">
       <% if post.image.attached? %>
-        <%= image_tag post.image, width: 300 %>
+        <%= image_tag post.image, style: "width: 100%; max-width: 450px; height: 250px; object-fit: cover; border-radius: 8px;" %>
       <% end %>
 
       <h2><%= link_to post.title, post_path(post) %></h2>
