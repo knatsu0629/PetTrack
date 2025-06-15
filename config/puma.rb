@@ -4,6 +4,8 @@
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum; this matches the default thread size of Active Record.
 #
+require_relative 'environment' # または Railsアプリの環境ファイルを読み込む
+
 max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
 min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
@@ -40,19 +42,12 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 # preload_app!
 
 # Allow puma to be restarted by `rails restart` command.
-plugin :tmp_restart
 
-bind "unix://#{Rails.root}/tmp/sockets/puma.sock"
+plugin :tmp_restart
 rails_root = Dir.pwd
-# 本番環境のみデーモン起動
-if Rails.env.production?
-  pidfile File.join(rails_root, 'tmp', 'pids', 'puma.pid')
-  state_path File.join(rails_root, 'tmp', 'pids', 'puma.state')
-  stdout_redirect(
-    File.join(rails_root, 'log', 'puma.log'),
-    File.join(rails_root, 'log', 'puma-error.log'),
-    true
-  )
-  # デーモン
-  daemonize
-end
+
+pidfile "#{rails_root}/tmp/pids/puma.pid"
+state_path "#{rails_root}/tmp/pids/puma.state"
+stdout_redirect "#{rails_root}/log/puma.log", "#{rails_root}/log/puma-error.log", true
+
+bind "unix://#{rails_root}/tmp/sockets/puma.sock"
