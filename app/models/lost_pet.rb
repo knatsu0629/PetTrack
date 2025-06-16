@@ -20,6 +20,7 @@ class LostPet < ApplicationRecord
   end
 
   validates :address, presence: true
+  validates :missing_date, presence: true
 
   geocoded_by :address
   after_validation :geocode, if: -> { will_save_change_to_address? && address.present? }
