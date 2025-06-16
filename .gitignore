@@ -40,3 +40,10 @@ yarn-debug.log*
 .yarn-integrity
 
 /.env
+
+# config backups
+/config/*.bak
+/config/*.bak*
+
+# tmp files
+/tmp/

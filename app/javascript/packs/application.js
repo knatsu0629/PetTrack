@@ -3,6 +3,9 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+import $ from 'jquery';
+import 'jquery-jpostal-ja';
+
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
@@ -17,3 +20,14 @@ import "./map"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+function jpostal() {
+  $('#zipcode').jpostal({
+    postcode : ['#zipcode'],
+    address : {
+      '#lost_pet_address': '%3%4%5'
+    }
+  });
+}
+
+$(document).on("turbolinks:load", jpostal); 
