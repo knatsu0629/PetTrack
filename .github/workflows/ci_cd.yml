@@ -17,8 +17,10 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1.2'
-          bundler-cache: true
           bundler: 2.6.3
+
+      - name: Install Ruby dependencies 
+        run: bundle install --jobs 4 --retry 3
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
