@@ -43,7 +43,7 @@ jobs:
           bundle exec rails db:migrate RAILS_ENV=test
 
       - name: Run tests (RSpec)
-        run: bundle exec rspec
+        run: /home/runner/work/PetTrack/PetTrack/vendor/bundle/ruby/3.1.0/bin/rspec 
       - name: Precompile assets
         run: |
           RAILS_ENV=production bundle exec rails assets:precompile
