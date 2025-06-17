@@ -48,6 +48,14 @@ jobs:
 
       - name: Run tests (RSpec)
         run: bundle exec rspec
+
+      - name: Clear Bootsnap cache for Production
+      　run: |
+          RAILS_ENV=production bundle exec rails runner "Rails.cache.clear" || true
+          rm -rf tmp/cache/bootsnap-load-path-cache
+          rm -rf tmp/cache/bootsnap-compile-cache
+          echo "Bootsnap cache cleared for production."
+
       - name: Precompile assets
         run: |
           RAILS_ENV=production bundle exec rails assets:precompile
