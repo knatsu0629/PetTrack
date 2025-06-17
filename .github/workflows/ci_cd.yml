@@ -28,6 +28,22 @@ jobs:
       - name: Install Ruby dependencies 
         run: bundle install --jobs 4 --retry 3 --with test
 
+      - name: Debug RSpec executable path
+        run: |
+          echo "Attempting to locate rspec executable..."
+          bundle binstub rspec
+
+          find "${{ github.workspace }}/vendor/bundle" -name rspec -type f -executable 2>/dev/null | while read -r f; do
+            echo "Found rspec executable: $f"
+          done
+
+          bundle exec rspec --version || echo "bundle exec rspec --version failed."
+
+          echo "Rspec-rails gem installed at:"
+          bundle show rspec-rails || echo "rspec-rails gem not found or error occurred."
+
+          echo "Done debugging RSpec path."
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
