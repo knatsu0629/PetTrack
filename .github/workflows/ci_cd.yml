@@ -19,6 +19,12 @@ jobs:
           ruby-version: '3.1.2'
           bundler: 2.6.3
 
+      - name: Clear Bootsnap cache
+        run: |
+        rm -rf tmp/cache/bootsnap-load-path-cache
+        rm -rf tmp/cache/bootsnap-compile-cache
+        echo "Bootsnap cache cleared."
+
       - name: Install Ruby dependencies 
         run: bundle install --jobs 4 --retry 3
 
