@@ -30,16 +30,6 @@ jobs:
 
       - name: Set up database
         run: |
-          cp config/database.yml.ci config/database.yml # CI用のdatabase.ymlがあればコピー
-          # または、config/database.yml を直接編集して、CI環境のPostgreSQLに接続するように設定
-          # 例: development: &default
-          #       adapter: postgresql
-          #       encoding: unicode
-          #       pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-          #       host: localhost
-          #       username: runner
-          #       password: password
-          #       database: rails_test
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
 
