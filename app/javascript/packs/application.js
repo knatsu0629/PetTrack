@@ -11,7 +11,6 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
-import "jquery";
 import "popper.js";
 import "bootstrap";
 import "../stylesheets/application"; 
@@ -30,4 +29,24 @@ function jpostal() {
   });
 }
 
-$(document).on("turbolinks:load", jpostal); 
+function initJpostalPlugin() {
+  console.log("jpostal plugin initialization started.");
+
+  const zipcodeElement = $('#zipcode');
+  if (zipcodeElement.length) {
+    console.log("Found #zipcode element. Applying jpostal plugin.");
+
+    zipcodeElement.jpostal({
+      postcode : ['#zipcode'],
+      address : {
+        '#lost_pet_address': '%3%4%5'
+      }
+    });
+    console.log("jpostal plugin applied to #zipcode."); // プラグイン適用完了をログ
+
+  } else {
+    console.log("Could not find #zipcode element for jpostal plugin application."); // 要素が見つからなかったことをログ
+  }
+}
+
+$(document).on("turbolinks:load", initJpostalPlugin);
