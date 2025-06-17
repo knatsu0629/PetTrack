@@ -1,0 +1,71 @@
+name: Rails CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_DB: rails_test
+          POSTGRES_USER: runner
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1.2'
+          bundler-cache: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'yarn'
+
+      - name: Install JavaScript dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Set up database
+        run: |
+          cp config/database.yml.ci config/database.yml # CI用のdatabase.ymlがあればコピー
+          # または、config/database.yml を直接編集して、CI環境のPostgreSQLに接続するように設定
+          # 例: development: &default
+          #       adapter: postgresql
+          #       encoding: unicode
+          #       pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+          #       host: localhost
+          #       username: runner
+          #       password: password
+          #       database: rails_test
+          bundle exec rails db:create RAILS_ENV=test
+          bundle exec rails db:migrate RAILS_ENV=test
+
+      - name: Run tests (RSpec)
+        run: bundle exec rspec
+      - name: Precompile assets
+        run: |
+          RAILS_ENV=production bundle exec rails assets:precompile
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
+
+      - name: Show build success message
+        run: echo "Build, Test, and Asset Precompilation completed successfully!"
